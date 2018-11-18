@@ -28,6 +28,7 @@ note book of ast
 
 2.2 transform
 
+(1) transform的用法
     遍历AST树并应用各transformers（plugin)生成变换后的AST树, babel中最核心的是babel-core，它向外暴露出babel.transform 接口。
 
 ```javascript
@@ -39,3 +40,18 @@ note book of ast
         babelrc: false
     }).code
 ```
+
+(2) 编写一个babel plugins
+
+
+
+2.3 generate
+
+    利用babel-generator将AST树输出为转码后的代码字符串;
+
+```javascript
+    const generator = require('babel-generator').default;
+    code = generator(code).code;
+```
+
+https://juejin.im/post/5ab9f2f3f265da239b4174f0

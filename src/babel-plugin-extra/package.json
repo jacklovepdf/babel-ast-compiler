@@ -1,0 +1,19 @@
+{
+  "name": "babel-plugin-extra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-loader": "^8.0.4",
+    "lodash": "^4.17.11",
+    "webpack": "^4.25.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
+  }
+}
