@@ -128,6 +128,30 @@ note book of ast
     )
 ```
 
+```javascript
+    var babel = require('babel-core');
+    var t = require('babel-types');
+
+    const code = `abs(-8);`;
+    const visitor = {
+        CallExpression(path) { //函数调用
+            if (path.node.callee.name !== 'abs') return; //函数名不为abs，不处理；
+            console.log("path==========>", path);
+            path.replaceWith(t.CallExpression( //使用babel-types创建CallExpression类型节点，并替换已有节点；
+                t.MemberExpression(t.identifier('Math'), t.identifier('abs')),
+                path.node.arguments
+            ));
+        }
+    };
+    const result = babel.transform(code, {
+        plugins: [{
+            visitor: visitor
+        }]
+    });
+    // Math.abs(-8)
+    console.log("result.code====>", result.code);
+```
+
 ## generate
 
     利用babel-generator将AST树输出为转码后的代码字符串;
