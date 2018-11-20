@@ -6,7 +6,6 @@ const code = `abs(-8);`;
 const visitor = {
 	CallExpression(path) {
 		if (path.node.callee.name !== 'abs') return;
-        console.log("path====>", path);
 		path.replaceWith(t.CallExpression(
 			t.MemberExpression(t.identifier('Math'), t.identifier('abs')),
 			path.node.arguments
