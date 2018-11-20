@@ -39,7 +39,7 @@ note book of ast
 
     转换成ast树的结构为：
 
-    [ast-tree](https://github.com/jacklovepdf/babel-ast-compiler/tree/master/src/images/ast-tree-demo.png)
+    ![ast-tree](https://github.com/jacklovepdf/babel-ast-compiler/tree/master/src/images/ast-tree-demo.png)
 
 ## transform
 
@@ -114,7 +114,7 @@ note book of ast
 
     可以先通过（在线ast转换平台）[https://astexplorer.net/]查看一下abs(-8)对应的ast tree的结构，如下所示：
 
-    [ast-tree](https://github.com/jacklovepdf/babel-ast-compiler/tree/master/src/images/ast-tree-abs.png)
+    ![ast-tree](https://github.com/jacklovepdf/babel-ast-compiler/tree/master/src/images/ast-tree-abs.png)
 
     可以看到表达式语句下面的 expression 主要是函数调用表达式（CallExpression），因此我们也需要创建一个函数调用表达式,可以借助 babel-types 里提供的一些方法帮我们快速创建。
 
