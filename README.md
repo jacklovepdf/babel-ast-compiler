@@ -23,7 +23,7 @@ note book of ast
 ## parse
 
 1. parse的主要工作
-    使用解析器（parser）对输入的源代码字符串进行解析并生成初始 AST（File.prototype.parse），可以使用babel-traverse对AST进行遍历，并解析出整个树的path，通过挂载的 metadataVisitor 读取对应的元信息；
+    使用解析器（parser）对输入的源代码字符串进行解析并生成初始AST（File.prototype.parse）;通常把源码解析成为抽象语法树的步骤可以分为两部：词法分析（Lexical Analysis）和语法分析（Syntactic Analysis）
 
 2. 关于ast
    对于开发者来说，源码可读性更高，但是站在计算机的角度，ast更易于计算机的处理，所有的ast根节点都是Program节点;ast各种节点信息对于我们编写babel插件来说必不可少，关于各种节点类型信息的详细说明见：[core Babylon AST node types](https://github.com/babel/babylon/blob/master/ast/spec.md)
@@ -39,7 +39,16 @@ note book of ast
 
     转换成ast树的结构为：
 
-    <img src="./src/images/ast-tree-demo.png" width="800px" height="600px">
+    ![ast-tree](./src/images/ast-tree-demo.png)
+
+3.ast的构建
+
+3.1 使用babel-types从零开始构建；
+        可以使用babel-traverse对AST进行遍历，并解析出整个树的path，通过挂载的 metadataVisitor 读取对应的元信息；
+
+3.2 使用babel parse从已有的js代码开始构建；
+
+3.3 使用babel template从已有的模版替换；
 
 ## transform
 
@@ -113,8 +122,8 @@ note book of ast
 ```
 
     可以先通过（在线ast转换平台）[https://astexplorer.net/]查看一下abs(-8)对应的ast tree的结构，如下所示：
-    
-    <img src="./src/images/ast-tree-abs.png" width="800px" height="600px">
+
+    ![ast-tree](./src/images/ast-tree-abs.png)
 
     可以看到表达式语句下面的 expression 主要是函数调用表达式（CallExpression），因此我们也需要创建一个函数调用表达式,可以借助 babel-types 里提供的一些方法帮我们快速创建。
 
@@ -161,5 +170,12 @@ note book of ast
     code = generator(code).code;
 ```
 
+## babel conclusion
 
-https://babeljs.io/docs/en/next/babel-types.html
+参考文档：
+
+1. (babel-types) [https://babeljs.io/docs/en/next/babel-types.html]
+
+2. (babel-parse) [https://astexplorer.net/]
+
+3. (babel-handbook) [https://github.com/jamiebuilds/babel-handbook]
