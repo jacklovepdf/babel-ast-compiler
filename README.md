@@ -6,7 +6,7 @@ note book of ast
 
 - [babel简介](#babel-instruct)
 - [babel parser](#babel-parser)
-- [babel transform](#babel=transform)
+- [babel transform](#babel-transform)
 - [babel generate](#babel-generate)
 - [babel conclusion](#babel-concurrency)
 
@@ -25,10 +25,63 @@ note book of ast
 1. parse的主要工作
     使用解析器（parser）对输入的源代码字符串进行解析并生成初始AST（File.prototype.parse）;通常把源码解析成为抽象语法树的步骤可以分为两部：词法分析（Lexical Analysis）和语法分析（Syntactic Analysis）
 
-2. 关于ast
+1.1 词法分析
+
+    根据tokenizer or lexer（分词器）将源码（raw code）分割成符号集（tokens）；tokens是一个数组，数组项为小对象，这些对象描述了相对独立的语法，它们可能是数字，标签，标点，操作符等任何符号；
+
+1.2 语法分析
+
+    把词法分析得到的tokens重新格式化为Abstract Syntax Tree, ast描述了每一部分语法以及相互关系; ast本质是一个深度嵌套对象，这个对象包含足够的信息以及很容易处理；
+
+```javascript  
+    * For the following syntax:
+    *
+    *   (add 2 (subtract 4 2))
+    *
+    * Tokens might look something like this:
+    *
+    *   [
+    *     { type: 'paren',  value: '('        },
+    *     { type: 'name',   value: 'add'      },
+    *     { type: 'number', value: '2'        },
+    *     { type: 'paren',  value: '('        },
+    *     { type: 'name',   value: 'subtract' },
+    *     { type: 'number', value: '4'        },
+    *     { type: 'number', value: '2'        },
+    *     { type: 'paren',  value: ')'        },
+    *     { type: 'paren',  value: ')'        },
+    *   ]
+    *
+    * And an Abstract Syntax Tree (AST) might look like this:
+    *
+    *   {
+    *     type: 'Program',
+    *     body: [{
+    *       type: 'CallExpression',
+    *       name: 'add',
+    *       params: [{
+    *         type: 'NumberLiteral',
+    *         value: '2',
+    *       }, {
+    *         type: 'CallExpression',
+    *         name: 'subtract',
+    *         params: [{
+    *           type: 'NumberLiteral',
+    *           value: '4',
+    *         }, {
+    *           type: 'NumberLiteral',
+    *           value: '2',
+    *         }]
+    *       }]
+    *     }]
+    *   }
+    */
+```  
+
+2  关于ast
    对于开发者来说，源码可读性更高，但是站在计算机的角度，ast更易于计算机的处理，所有的ast根节点都是Program节点;ast各种节点信息对于我们编写babel插件来说必不可少，关于各种节点类型信息的详细说明见：[core Babylon AST node types](https://github.com/babel/babylon/blob/master/ast/spec.md)
 
-    对与下面一段简单的js代码片段:
+    对于下面一段简单的js代码片段:
 
 ```javascript
     let name = 'jack';
@@ -37,9 +90,9 @@ note book of ast
     }
 ```
 
-    转换成ast树的结构为：
+    转换成ast树的结构为:
 
-    ![ast-tree](./src/images/ast-tree-demo.png)
+    <img src="./src/images/ast-tree-demo.png" width="800px" height="600px" />
 
 3.ast的构建
 
@@ -51,6 +104,27 @@ note book of ast
 3.3 使用babel template从已有的模版替换；
 
 ## transform
+
+    对code parse生成的ast进行修改，它不仅可以通过ast在同一种语言进行转换，还可以生成另一门语言；ast包括很多相似的元素，这些元素
+    是一个个节点，包括type等属性，我们通常称之为ast node;
+
+```javascript
+* //ast node example
+* We can have a node for a "NumberLiteral":
+*
+*   {
+*     type: 'NumberLiteral',
+*     value: '2',
+*   }
+*
+* Or maybe a node for a "CallExpression":
+*
+*   {
+*     type: 'CallExpression',
+*     name: 'subtract',
+*     params: [...nested nodes go here...],
+*   }
+```
 
 1 transform的用法
     遍历AST树并应用各transformers（plugin)生成变换后的AST树, babel中最核心的是babel-core，它向外暴露出babel.transform 接口。
@@ -179,3 +253,5 @@ note book of ast
 2. (babel-parse) [https://astexplorer.net/]
 
 3. (babel-handbook) [https://github.com/jamiebuilds/babel-handbook]
+   
+4. https://github.com/jamiebuilds/the-super-tiny-compiler/blob/master/the-super-tiny-compiler.js
