@@ -139,11 +139,111 @@ note book of ast
     }).code
 ```
 
-2 编写一个babel plugins
+2 Traversal
 
-2.1 遍历ast tree的节点
+    为了路由到指定的节点进行指定操作，需要遍历ast的节点，babel-traverse会以深度优先的法则来遍历树的节点，例如；
 
-    在编写ast插件的时候，通常需要遍历ast tree的节点，babel提供了babel-traverse来对树状结构进行遍历；对于ast tree上的每一个分支我们都会先向下遍历走到尽头，然后向上遍历退出遍历过的节点寻找下一个分支;
+```javascript
+    *   {
+    *     type: 'Program',
+    *     body: [{
+    *       type: 'CallExpression',
+    *       name: 'add',
+    *       params: [{
+    *         type: 'NumberLiteral',
+    *         value: '2'
+    *       }, {
+    *         type: 'CallExpression',
+    *         name: 'subtract',
+    *         params: [{
+    *           type: 'NumberLiteral',
+    *           value: '4'
+    *         }, {
+    *           type: 'NumberLiteral',
+    *           value: '2'
+    *         }]
+    *       }]
+    *     }]
+    *   }
+    *
+    * So for the above AST we would go:
+    *
+    *   1. Program - Starting at the top level of the AST
+    *   2. CallExpression (add) - Moving to the first element of the Program's body
+    *   3. NumberLiteral (2) - Moving to the first element of CallExpression's params
+    *   4. CallExpression (subtract) - Moving to the second element of CallExpression's params
+    *   5. NumberLiteral (4) - Moving to the first element of CallExpression's params
+    *   6. NumberLiteral (2) - Moving to the second element of CallExpression's params
+```
+
+    如果我们想直接操作ast, 而不是创建新的独立ast, 我们只需要visit每一个节点即可，而不需要了解（all sorts of abstractions）
+
+```javascript
+    * Visitors
+    * --------
+    *
+    * The basic idea here is that we are going to create a “visitor” object that
+    * has methods that will accept different node types.
+    *
+    *   var visitor = {
+    *     NumberLiteral() {},
+    *     CallExpression() {},
+    *   };
+    *
+    * When we traverse our AST, we will call the methods on this visitor whenever we
+    * "enter" a node of a matching type.
+    *
+    * In order to make this useful we will also pass the node and a reference to
+    * the parent node.
+    *
+    *   var visitor = {
+    *     NumberLiteral(node, parent) {},
+    *     CallExpression(node, parent) {},
+    *   };
+    *
+    * However, there also exists the possibility of calling things on "exit". Imagine
+    * our tree structure from before in list form:
+    *
+    *   - Program
+    *     - CallExpression
+    *       - NumberLiteral
+    *       - CallExpression
+    *         - NumberLiteral
+    *         - NumberLiteral
+    *
+    * As we traverse down, we're going to reach branches with dead ends. As we
+    * finish each branch of the tree we "exit" it. So going down the tree we
+    * "enter" each node, and going back up we "exit".
+    *
+    *   -> Program (enter)
+    *     -> CallExpression (enter)
+    *       -> Number Literal (enter)
+    *       <- Number Literal (exit)
+    *       -> Call Expression (enter)
+    *          -> Number Literal (enter)
+    *          <- Number Literal (exit)
+    *          -> Number Literal (enter)
+    *          <- Number Literal (exit)
+    *       <- CallExpression (exit)
+    *     <- CallExpression (exit)
+    *   <- Program (exit)
+    *
+    * In order to support that, the final form of our visitor will look like this:
+    *
+    *   var visitor = {
+    *     NumberLiteral: {
+    *       enter(node, parent) {},
+    *       exit(node, parent) {},
+    *     }
+    *   };
+    */
+```
+
+3 编写一个babel plugins
+
+3.1 遍历ast tree的节点
+
+    在编写ast插件的时候，通常需要遍历ast tree的每一个节点，babel提供了babel-traverse来对树状结构进行遍历；对于ast tree上的每一个分支我们都会先向下遍历走到尽头，然后向上遍历退出遍历过的节点寻找下一个分支;
 
 (1) visitor对象
 
@@ -237,7 +337,10 @@ note book of ast
 
 ## generate
 
-    利用babel-generator将AST树输出为转码后的代码字符串;
+    代码生成器根据ast生成编译之后的产物的有几种方式，有些编译器会重用之前的tokens，有些编译会创建新的代码表示，但是大部分的场景是：
+使用transform阶段生成的ast来生成最终编译之后的产物；
+
+1 利用babel-generator将AST树输出为转码后的代码字符串;
 
 ```javascript
     const generator = require('babel-generator').default;
