@@ -5,10 +5,6 @@ basic usage of babel
 ## Table of Contents
 
 - [babel的使用方式](#babel-use-method)
-- [babel parser](#babel-parser)
-- [babel transform](#babel-transform)
-- [babel generate](#babel-generate)
-- [babel conclusion](#babel-concurrency)
 
 ## 1.babel的使用
 
