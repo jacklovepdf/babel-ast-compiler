@@ -1,0 +1,19 @@
+{
+  "name": "webpack-babel-usage",
+  "version": "1.0.0",
+  "description": "webpack babel demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "jacklin",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0"
+  }
+}
