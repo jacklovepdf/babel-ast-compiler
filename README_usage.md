@@ -6,7 +6,10 @@ basic usage of babel
 
 - [1.babel的使用方式](#babel-use-method)
 - [2.babel的一些基本概念](#babel-core-concept)
-- [3.babel常见的api](#babel-api)
+- [3.babel常见的插件](#babel-api)
+- [4.babel常见的preset](#babel-api)
+- [5.关于polyfill](#babel-polyfill)
+- [6.babel常见的api](#babel-api)
   
 ## 1.babel的使用
 
@@ -29,7 +32,7 @@ basic usage of babel
 
 1.2 Configuration
 
-    根据需求的不同，可以选择不同配置文件；常见的配置文件有两种形式；
+    根据需求的不同，可以选择不同配置文件；比较常用的配置文件有两种形式；
 
 (1) babel.config.js
     这种形式的配置文件适合于编程的形式创建或者编译node_modules中的文件；
@@ -71,4 +74,56 @@ basic usage of babel
 
 2.2 Presets（转码规则, pre-determined set of plugins.）
 
-    本质上来说，Presets是插件的集合；
+    本质上来说，Presets是插件的集合；举个例子，使用babel把es6语法转换成es5语法，我们可以使用plugin-transform-arrow-functions转换箭头函数，
+但是es6有很多的新特性，与其我们一个个去添加每一个新特性对应的插件，我们可以使用Presets
+
+2.3  Plugin与Preset执行顺序
+Plugin与Preset执行顺序？？？？
+
+## 3.babel常见的插件
+
+## 4.babel常见的preset
+
+4.1 @babel/preset-env
+
+## 5.关于polyfill
+
+    @babel/polyfill模块包括core.js和一个regenerator运行时来模拟最新的es6运行环境;通过使用polyfill，可以在低版本的运行时中使用不支持的
+es6特性；比如运行时(浏览器/node)内置的Promise, WeakMap, 一些静态方法， 比如Array.from, 一些对象方法，比如Array.prototype.includes;为了做到这一点，polyfill特性被添加到全局作用域就像原生对象一样；
+    对于库或者工具的作者来说，可能并不需要添加原型方法，此时你可以使用transform-runtime插件，而不是@babel/polyfill，这样就可以不用污染全局作用
+域；更近一步来说，如果你确定支持某几个特性，你可以直接从core.js中直接加载它们；
+    由于有了preset-env, env中的配置项useBuiltIns设置为“usage”时，preset可以根据指定需要支持的target来加载特定的插件集；
+
+```javascript
+    const presets = [
+  [
+    "@babel/env",
+    {
+      targets: {
+        edge: "17"
+      },
+      useBuiltIns: "usage",
+    },
+  ],
+];
+
+module.exports = { presets };
+```
+
+    根据上面的配置Babel会检测代码中特性在指定的环境中是否支持，如果不支持会加载对应的polyfills.比如你的代码如下：
+
+```javascript
+    Promise.resolve().finally();
+```
+
+    由于edge17并不支持Promise， babel会把代码转换如下：
+
+```javascript
+    require("core-js/modules/es.promise.finally");
+    Promise.resolve().finally();
+```
+
+## 6.babel常见的api
+
+@babel域中比较常用的模块：
+@babel/core, @babel/cli, @babel/preset-env,  
