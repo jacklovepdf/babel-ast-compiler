@@ -335,6 +335,8 @@ note book of ast
     console.log("result.code====>", result.code);
 ```
 
+**Note**: [更多使用和创建插件详见](https://github.com/jamiebuilds/babel-handbook)
+
 ## generate
 
     代码生成器根据ast生成编译之后的产物的有几种方式，有些编译器会重用之前的tokens，有些编译会创建新的代码表示，但是大部分的场景是：

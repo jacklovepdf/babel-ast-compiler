@@ -141,6 +141,20 @@ basic usage of babel
     当前最新规范的草案;可以细分为stage-0，stage-1, stage-2, stage-3;低一级的stage会包含上一级stage的所有内容；
 还有一些es201x，last这样的preset已经废弃，因为通过使用env更加的智能;
 
+4.3 创建preset
+
+```javascript
+    module.exports = function() {
+        return {
+            plugins: [
+                "pluginA",
+                "pluginB",
+                "pluginC",
+            ]
+        };
+    }
+```
+
 ## 5.关于polyfill
 
     @babel/polyfill模块包括core.js和一个regenerator运行时来模拟最新的es6运行环境;通过使用polyfill，可以在低版本的运行时中使用不支持的
