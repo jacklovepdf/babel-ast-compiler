@@ -78,13 +78,68 @@ basic usage of babel
 但是es6有很多的新特性，与其我们一个个去添加每一个新特性对应的插件，我们可以使用Presets
 
 2.3  Plugin与Preset执行顺序
-Plugin与Preset执行顺序？？？？
+
+    Plugin在Preset之前执行；Plugins执行顺序为从前往后；Preset执行顺序为从后向前，这样做的主要目的是为了确保向后兼容，通常来说，我们一般是把后出的Preset放在后面，这样如果从前往后执行就会导致babel出错；
 
 ## 3.babel常见的插件
 
+3.1 插件的基本概念
+
+    babel是一个js编译器，但它本身不会对代码做任何改变，只有添加相应的插件之后才能进行对应的转换；
+
+3.2 插件的分类
+
+(1) 转换插件(Transform Plugins)
+转换插件会启用相应的语法插件，所以不必同时使用转换插件和语法插件；常用的转换插件可以细分es201x, react, minify以及modules等类别；
+
+(2) 语法插件(syntax plugins)
+语法插件只允许babel去解析相应的语法，并不会去转换（not transform）;
+
+(3) 路径（paths）
+对于使用插件时候指定的路径，如果插件在npm上，你只需要指定插件名，babel会检测插件是否在node_modules中安装；当然，你也可以指定插件的相对/或者绝对路径；
+
+```javascript
+    // plugins name
+    {
+        "plugins": ["babel-plugin-myPlugin"]
+    }
+    // relative or absolute path
+    {
+        "plugins": ["./node_modules/asdf/plugin"]
+    }
+```
+
+(4) 插件名简写
+    如果插件对应的包名是以babel-plugin-为前缀，则可以省略前缀；
+
+```javascript
+{
+  "plugins": [
+    "myPlugin",
+    "babel-plugin-myPlugin" // equivalent
+  ]
+}
+```
+
 ## 4.babel常见的preset
 
-4.1 @babel/preset-env
+4.1 官方目前提供的preset
+
+(1)@babel/preset-env(**)
+
+    本质上的作用是将新版本的js特性转换
+(2) @babel/preset-react
+
+(3)) @babel/preset-flow
+
+    flow是facebook 推出的js静态类型检查工具。
+
+(4)) @babel/preset-minify
+
+4.2 stage-x
+
+    当前最新规范的草案;可以细分为stage-0，stage-1, stage-2, stage-3;低一级的stage会包含上一级stage的所有内容；
+还有一些es201x，last这样的preset已经废弃，因为通过使用env更加的智能;
 
 ## 5.关于polyfill
 
