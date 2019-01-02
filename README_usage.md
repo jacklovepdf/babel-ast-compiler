@@ -9,7 +9,7 @@ basic usage of babel
 - [3.babel常见的插件](#babel-api)
 - [4.babel常见的preset](#babel-api)
 - [5.关于polyfill](#babel-polyfill)
-- [6.babel常见的api](#babel-api)
+- [6.关于babel的配置](#babel-option)
   
 ## 1.babel的使用
 
@@ -63,6 +63,12 @@ basic usage of babel
 ```
 
 **Note**:推荐babel.config.js形式的配置文件, 更多配置形式详见: [babel配置](https://babeljs.io/docs/en/configuration#babelconfigjs)；
+
+(3) 常见的一些配置项
+
+1.presets
+2.plugins
+3.env
 
 ## 2.babel的一些基本概念
 
@@ -136,7 +142,7 @@ basic usage of babel
 
 (4)) @babel/preset-minify
 
-4.2 stage-x
+4.2 实验性质的presets（stage-x）
 
     当前最新规范的草案;可以细分为stage-0，stage-1, stage-2, stage-3;低一级的stage会包含上一级stage的所有内容；
 还有一些es201x，last这样的preset已经废弃，因为通过使用env更加的智能;
@@ -148,8 +154,8 @@ basic usage of babel
         return {
             plugins: [
                 "pluginA",
-                "pluginB",
-                "pluginC",
+                ["pluginB"],
+                ["pluginC", {}],
             ]
         };
     }
@@ -192,7 +198,7 @@ module.exports = { presets };
     Promise.resolve().finally();
 ```
 
-## 6.babel常见的api
+## 6.关于babel的配置
 
 @babel域中比较常用的模块：
 @babel/core, @babel/cli, @babel/preset-env,  
