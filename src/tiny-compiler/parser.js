@@ -1,5 +1,5 @@
 // Okay, so we define a `parser` function that accepts our array of `tokens`.
-export function parser(tokens) {
+function parser(tokens) {
 
     // Again we keep a `current` variable that we will use as a cursor.
     let current = 0;
@@ -141,4 +141,8 @@ export function parser(tokens) {
   
     // At the end of our parser we'll return the AST.
     return ast;
+  }
+
+  module.exports = {
+    parser
   }

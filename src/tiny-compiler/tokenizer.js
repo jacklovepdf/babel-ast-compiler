@@ -1,6 +1,6 @@
 // We start by accepting an input string of code, and we're gonna set up two
 // things...
-export function tokenizer(input) {
+function tokenizer(input) {
 
     // A `current` variable for tracking our position in the code like a cursor.
     let current = 0;
@@ -157,4 +157,8 @@ export function tokenizer(input) {
   
     // Then at the end of our `tokenizer` we simply return the tokens array.
     return tokens;
+  }
+
+  module.exports = {
+    tokenizer
   }

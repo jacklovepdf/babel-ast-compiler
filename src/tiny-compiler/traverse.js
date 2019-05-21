@@ -35,7 +35,7 @@
 
 // So we define a traverser function which accepts an AST and a
 // visitor. Inside we're going to define two functions...
-export function traverser(ast, visitor) {
+function traverser(ast, visitor) {
 
     // A `traverseArray` function that will allow us to iterate over an array and
     // call the next function that we will define: `traverseNode`.
@@ -99,4 +99,8 @@ export function traverser(ast, visitor) {
     // Finally we kickstart the traverser by calling `traverseNode` with our ast
     // with no `parent` because the top level of the AST doesn't have a parent.
     traverseNode(ast, null);
+  }
+
+  module.exports = {
+    traverser
   }

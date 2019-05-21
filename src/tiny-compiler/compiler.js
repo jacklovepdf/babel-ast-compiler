@@ -7,18 +7,32 @@
  *   3. ast    => transformer => newAst
  *   4. newAst => generator   => output
  */
-import { tokenizer } from './tokenizer';
-import { parser } from './parser';
-import { transformer } from './transformer';
-import { codeGenerator } from  './codeGenerator';
+const {
+  tokenizer
+} = require('./tokenizer');
+const {
+  parser
+} = require('./parser');
+const {
+  transformer
+} = require('./transformer');
+const {
+  codeGenerator
+} = require('./codeGenerator');
 
 function compiler(input) {
     let tokens = tokenizer(input);
+    console.log('tokens======>', tokens);
     let ast    = parser(tokens);
+    console.log('ast=====>', JSON.stringify(ast));
     let newAst = transformer(ast);
     let output = codeGenerator(newAst);
   
     // and simply return the output!
     return output;
   }
+
+module.exports = {
+  compiler
+}
   

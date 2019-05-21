@@ -1,6 +1,9 @@
 // So we have our transformer function which will accept the lisp ast.
-import { traverser } from './traverse';
-export function transformer(ast) {
+const {
+  traverser
+} = require('./traverse');
+
+function transformer(ast) {
 
     // We'll create a `newAst` which like our previous AST will have a program
     // node.
@@ -87,4 +90,8 @@ export function transformer(ast) {
     // At the end of our transformer function we'll return the new ast that we
     // just created.
     return newAst;
+  }
+
+  module.exports = {
+    transformer
   }
