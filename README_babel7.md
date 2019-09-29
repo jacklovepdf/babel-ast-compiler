@@ -4,31 +4,42 @@
 
 ## Table of Contents
 
-- [babel-usage](#babel-usage)
-  - [Table of Contents](#table-of-contents)
   - [1.为什么升级babel7](#1%e4%b8%ba%e4%bb%80%e4%b9%88%e5%8d%87%e7%ba%a7babel7)
   - [2.babel7中重要presets](#2babel7%e4%b8%ad%e9%87%8d%e8%a6%81presets)
   - [3.babel7中重要plugins](#3babel7%e4%b8%ad%e9%87%8d%e8%a6%81plugins)
+  - [4.babel7源码解读](#babel-usage)
 
 ## 1.为什么升级babel7
 
-    (1)babel7自2018年7月发布以来，已经经过1年多的迭代，已经相对比较稳定. 
+    (1) babel7自2018年7月发布以来，已经经过1年多的迭代，已经相对比较稳定. 
     (2) babel7具有更好的性能，更强的功能以及更好的易用性;
 
 ## 2.babel7中重要presets
 
 2.1 @babel/preset-env
+
     @babel/preset-env是一款非常智能的preset,它很方便的使开发者使用最新的js语法,而不需要过多的配置;下面列一些基础配置说明;
+
 (1) Browserslist Integration
+
     特别适用前端项目, 主要是前端工程有很多工具autoprefixer, stylelint, eslint-plugin-compat等都使用相同的配置;
+
 (2) targets
+
     描述项目支持的平台或者是环境;
+
 (3) modules
+
     把es6模块转换成指定的模块;
+
 (4) include
+
     必须包含的插件;
+
 (5) useBuiltIns("usage" | "entry" | false)
+
     指示preset如何处理polyfills;
+
     1. entry
     这个选项会启用一个新的插件根据运行环境的不同用具体core-js polyfill替换import "core-js/stable";和import "regenerator-runtime/runtime"语句(or require("corejs") and require("regenerator-runtime/runtime")).
 
