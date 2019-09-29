@@ -20,7 +20,7 @@ note book of ast
 
     用babel对代码进行处理（eg es6转es5或者jsx转换）主要可以划分为3步：parse, transform and generate;
 
-## parse
+## parse（parser）
 
 1. parse的主要工作
     使用解析器（parser）对输入的源代码字符串进行解析并生成初始AST（File.prototype.parse）;通常把源码解析成为抽象语法树的步骤可以分为两部：词法分析（Lexical Analysis）和语法分析（Syntactic Analysis）

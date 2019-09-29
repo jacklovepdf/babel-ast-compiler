@@ -70,6 +70,10 @@ basic usage of babel
 2.plugins
 3.env
 
+1.3 配合构建工具
+
+    实际得项目中，很多时候babel会配合构建工具（eg, webpack, gulp, grunt等；）一起来完成自己的职责
+
 ## 2.babel的一些基本概念
 
     对于babel的使用，熟悉一些基本概念以及@babel域下常用库对于我们快速上手大有裨益；
@@ -85,7 +89,7 @@ basic usage of babel
 
 2.3  Plugin与Preset执行顺序
 
-    Plugin在Preset之前执行；Plugins执行顺序为从前往后；Preset执行顺序为从后向前，这样做的主要目的是为了确保向后兼容，通常来说，我们一般是把后出的Preset放在后面，这样如果从前往后执行就会导致babel出错；
+    Plugin在Preset之前执行；Plugins执行顺序为从前往后；Preset执行顺序为从后向前，这样做的主要目的是为了确保向后兼容，通常来说，我们一般是把后出的Preset放在后面，这样如果从前往后执行就会导致babel出错;
 
 ## 3.babel常见的插件
 
@@ -200,5 +204,23 @@ module.exports = { presets };
 
 ## 6.关于babel的配置
 
-@babel域中比较常用的模块：
+ 6.1 Primary options
+
+ 6.2 Config Loading options
+
+ 6.3 Plugin and Preset configuration
+
+ 6.4 Config Merging options
+
+ 6.5 Source Map options
+
+ 6.6 Misc options
+
+ 6.7 Code Generator options
+
+ 6.8 AMD / UMD / SystemJS options
+
+ 6.9 Option concepts
+
+@babel域中比较常用的模块:
 @babel/core, @babel/cli, @babel/preset-env,  

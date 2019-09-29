@@ -15,6 +15,5 @@ var parser = new htmlparser.Parser({
 		}
 	}
 }, {decodeEntities: true});
-parser.write("Xyz <script type='text/javascript' title='{{title}}'>var foo = '<<bar>>';</ script>");
-parser.write("<div>jack lin</div>");
+parser.write("<div title='name'>jack lin</div>");
 parser.end();
