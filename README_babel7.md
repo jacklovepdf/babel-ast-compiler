@@ -75,12 +75,24 @@
 (2) regenerator
 (3) helpers
 
-通常配置如下:
+一个按需polyfill,支持提案特性且能够提取hepler方法（减少包体积）的配置如下:
 
 ```javascript
-    "plugins": [
-        ["@babel/plugin-transform-runtime", {
+    {
+        "presets": [
+            ["@babel/preset-env", {
+            "targets": {
+                "ie": 9
+            },
+            "useBuiltIns": "usage",
             "corejs": { "version": 3, "proposals": true }
-        }]
-    ]
+            }]
+        ],
+        "plugins": [
+            ["@babel/plugin-transform-runtime", {
+                "corejs": 3,
+                "proposals": true
+            }]
+        ]
+    }
 ```
