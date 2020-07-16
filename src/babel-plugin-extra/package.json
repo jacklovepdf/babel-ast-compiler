@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-loader": "^8.0.4",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "webpack": "^4.25.1"
   },
   "devDependencies": {
